@@ -1,0 +1,14 @@
+{
+    "name": "anna/hw4",
+    "autoload": {
+        "psr-4": {
+            "Anna\\HW4\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Anna Danilova"
+        }
+    ],
+    "require": {}
+}
