@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href={{ style }}>
+</head>
+<body>
+{% include header %}
+<main>
+    <div class="content">
+        {% include content_template_name %}
+    </div>
+    <div class="sidebar">
+        {% include sidebar %}
+    </div>
+</main>
+{% include footer %}
+</body>
+</html>

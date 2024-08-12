@@ -1,0 +1,7 @@
+<h4>{{ subtitle }}</h4>
+<form action={{ action }} method="post">
+    <label>Имя:<input type="text" name="name" required value={{ name }}></label>
+    <label>Фамилия:<input type="text" name="lastname" required value={{ lastname }}></label>
+    <label>Дата рождения:<input type="date" name="birthday" required value={{ birthday | date("Y-m-d") }}></label>
+    <button type="submit" class="button">Отправить</button>
+</form>
