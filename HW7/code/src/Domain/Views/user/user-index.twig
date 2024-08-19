@@ -1,0 +1,14 @@
+{% include "support/add-button.twig" %}
+<p>Список пользователей в хранилище:</p>
+
+<ul class="navigation">
+    {% for user in users %}
+        <li>
+            <a href="/payment/find/?id={{ user.getIdUser() }}">
+                {{ user.getIdUser() }} | {{ user.getUserName() }} {{ user.getUserlastname() }}. День рождения: {{ user.getUserBirthdayTimestamp() | date('d.m.Y') }}
+            </a>
+            <a href="/user/change/?id={{ user.getIdUser() }}" class="button">РЕДАКТИРОВАТЬ</a>
+            <a href="/user/delete/?id={{ user.getIdUser() }}" class="button">В УРНОЧКУ</a>
+        </li>
+    {% endfor %}
+</ul>
