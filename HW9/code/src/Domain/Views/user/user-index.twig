@@ -1,0 +1,95 @@
+{% if admin == true %}
+    {% include "support/add-button.twig" %}
+{% endif %}
+<p>Список пользователей в хранилище:</p>
+
+<div class="table-responsive small">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">День рождения</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr id="user-{{ user.getIdUser() }}">
+                <td>{{ user.getIdUser() }}</td>
+                <td>{{ user.getUserName() }}</td>
+                <td>{{ user.getUserlastname() }}</td>
+                <td>
+                    {% if user.getUserBirthdayTimestamp() is not empty %}
+                        {{ user.getUserBirthdayTimestamp() | date('d.m.Y') }}
+                    {% else %}
+                        <b>Не задан</b>
+                    {% endif %}
+                </td>
+                {% if admin == true %}
+                    <td>
+                        <a href="/user/change/?id={{ user.getIdUser() }}" class="button">РЕДАКТИРОВАТЬ</a>
+                    </td>
+                    <td>
+                        <button class="button del-button" id="del-{{ user.getIdUser() }}">В УРНОЧКУ</button>
+                    </td>
+                {% endif %}
+                {#                <a href="/user/delete/?id={{ user.getIdUser() }}" class="button">В УРНОЧКУ</a> #}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    const delButtonElements = document.querySelectorAll('.del-button');
+    for (const delButtonElement of delButtonElements) {
+        delButtonElement.addEventListener('click', () => {
+            const id = delButtonElement.id.replace('del-', '');
+            $.ajax({
+                method: 'DELETE',
+                url: "/user/delete/",
+                data: {deletionUserId: id}
+            }).done((response) => {
+                const status = $.parseJSON(response)['status'];
+                if (status === 'ok') {
+                    const row = document.querySelector(`.table-responsive tbody #user-${id}`);
+                    row.remove();
+                }
+            });
+        });
+    }
+
+    let maxId = $('.table-responsive tbody tr:last-child td:first-child').html();
+    setInterval(function () {
+        $.ajax({
+            method: 'POST',
+            url: "/user/refresh/",
+            data: {maxId: maxId}
+        }).done(function (response) {
+
+            const users = $.parseJSON(response);
+
+            if (users.length !== 0) {
+                for (const key in users) {
+
+                    let row = "<tr>";
+
+                    row += "<td>" + users[key].id + "</td>";
+                    maxId = users[key].id;
+
+                    row += "<td>" + users[key].username + "</td>";
+                    row += "<td>" + users[key].userlastname + "</td>";
+                    row += "<td>" + users[key].userbirthday + "</td>";
+                    row += `<td><a href=/user/change/?id=${users[key].id} class="button">РЕДАКТИРОВАТЬ</a></td>`;
+                    row += `<td><button class="button del-button" id="del-${users[key].id}">В УРНОЧКУ</button></td>`;
+
+                    row += "</tr>";
+
+                    $('.table-responsive tbody').append(row);
+                }
+
+            }
+
+        });
+    }, 10000);
+</script>

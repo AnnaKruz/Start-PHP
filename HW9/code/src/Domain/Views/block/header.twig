@@ -1,0 +1,21 @@
+<header>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/user">Пользователи</a>
+        <a href="/payment">Платежи</a>
+        <a href="/about">О нас</a>
+        <a href="/site/info">Информация о сервере</a>
+    </nav>
+    <div class="options">
+        {% if auth %}
+            <div class="user_info">
+                <p class="login">{{ login }}</p><a href="/auth/logout">Выход</a>
+            </div>
+        {% else %}
+            <div>
+                <a href="/auth/login">Вход</a> / <a href="/auth/registration">Регистрация</a>
+            </div>
+        {% endif %}
+        <div class="time">{{ time | date("H:i") }}</div>
+    </div>
+</header>
