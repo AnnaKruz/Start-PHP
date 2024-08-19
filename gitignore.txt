@@ -1,5 +1,6 @@
-**/.idea
-**/.gitignore
-**/vendor
+*/.idea
+*/.gitignore
+**/vendor/
 **/*.lock
 **/db/
+**/log/

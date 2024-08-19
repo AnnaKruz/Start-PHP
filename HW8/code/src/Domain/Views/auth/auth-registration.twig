@@ -1,0 +1,13 @@
+<h4>{{ subtitle }}</h4>
+<p class="error_message">{{ error_message | nl2br }}</p>
+<form action={{ action }} method="post">
+    <label>Логин:<input type="text" name="login" required value={{ login }}></label>
+    <label>Пароль:<input type="password" name="password" required value={{ password }}></label>
+    <label>Подтверждение:<input type="password" name="confirm" required value={{ confirm }}></label>
+    <br>
+    <label>Имя:<input type="text" name="name" required value={{ name }}></label>
+    <label>Фамилия:<input type="text" name="lastname" required value={{ lastname }}></label>
+    <label>Дата рождения:<input type="date" name="birthday" required value={{ birthday | date("Y-m-d") }}></label>
+    <br>
+    <button type="submit" class="button">Отправить</button>
+</form>
